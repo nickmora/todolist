@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
     date: {type: Date, default: Date.now},
-    body: {type: String, required: true}
+    body: {type: String, required: true},
+    item: {type: Schema.Types.ObjectId, ref: "Item"}
 });
 
 const Comment = mongoose.model("Comment", CommentSchema);

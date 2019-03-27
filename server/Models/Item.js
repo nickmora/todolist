@@ -6,7 +6,7 @@ const ItemSchema = new Schema({
     date: {type: Date, default: Date.now},
     complete: {type: Boolean, default: false},
     body: {type: String, required: true},
-    comment: {type: Schema.Types.ObjectId, ref: "Comment"}
+    comment: [{type: Schema.Types.ObjectId, ref: "Comment"}]
 });
 
 const Item = mongoose.model("Item", ItemSchema);
