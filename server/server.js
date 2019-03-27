@@ -2,8 +2,9 @@ const express = require ("express"),
     mongoose = require("mongoose"),
     logger = require("morgan");
 
+
 const PORT = process.env.PORT||1234,
-    db = require("./Models");
+    routes = require("./Routes");
 
 const app = express();
 
@@ -14,10 +15,10 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
 };
+app.use(routes);
 
-mongoose.connect("mongodb://localhost/to-do-list", {useNewUrlParser: true});
+mongoose.connect("mongodb://localhost/todolist", {useNewUrlParser: true});
 
-app.use("/", "./Routes");
 
 app.get("*", function(req, res) {
     res.sendFile(path.join(__dirname, "../client/build/index.html"));

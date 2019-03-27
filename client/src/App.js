@@ -4,9 +4,27 @@ import { Grid } from '@material-ui/core';
 import Completed from './Pages/Completed';
 import ToDo from "./Pages/ToDo"
 import AddTaskForm from "./Pages/AddTaskForm"
+import API from "./Utils/API"
 
 
 class App extends Component {
+
+  state = {
+    items: []
+  }
+  
+  getAllItems = ()=>{
+    API.getAllItems()
+    .then(resp=>{
+      this.setState({items:resp.data})
+      console.log(this.state.items)
+    }).catch(err=>console.log(err))
+  }
+  
+  componentDidMount(){
+    this.getAllItems();
+  };
+
   render() {
     return (
       <div className="App">
@@ -19,7 +37,7 @@ class App extends Component {
             item
             md={6}
           >
-            <ToDo />
+            <ToDo items = {this.state.items.filter(item=>item.complete===false)} />
           </Grid>
           <Grid
             item

@@ -19,12 +19,11 @@ const styles = {
 };
 
 class ItemCard extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            expanded: false,
-        }
+
+    state = {
+        expanded: false,
     }
+
     handleExpandClick = () => {
         this.setState(state => ({ expanded: !state.expanded }));
     };
@@ -38,13 +37,13 @@ class ItemCard extends Component {
                 <CardContent>
 
                     <Typography variant="h5" component="h2" align="center">
-                        TITLE
+                        *{this.props.title}*
         </Typography>
                     <Typography className={classes.pos} color="textSecondary" align="right">
-                        - - T i M e S T a M P - -
+                        - - {this.props.date} - -
         </Typography>
                     <Typography component="p">
-                        Body body body
+                        o {this.props.body} o 
         </Typography>
                 </CardContent>
                 <CardActions>

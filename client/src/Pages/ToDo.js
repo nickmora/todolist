@@ -1,22 +1,47 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import ItemCard from "../Components/ItemCard";
-import {Grid} from "@material-ui/core";
+import { Grid, Typography, Paper } from "@material-ui/core";
 
 class ToDo extends Component {
-    constructor (props){
-        super (props);
-    };
-    render(){
+
+    render() {
         return (
             <Grid
                 container
-                alignItems = "center"
+                alignItems="center"
+                justify="center"
             >
                 <Grid
                     item
-                    md = {12}
+                    md={12}
                 >
-                    <ItemCard />
+                    <Paper
+                        style={{ padding: 20 }}
+                    >
+
+                        <Typography
+                            variant="h4"
+                            align="center"
+                            gutterBottom
+                        >
+                            Things you gotta do, bruh
+                        </Typography>
+                        {this.props.items.map(item => (
+                            <Grid
+                                item
+                                md={12}
+                            >
+                                <ItemCard
+                                    title={item.title}
+                                    comment={item.comment}
+                                    body={item.body}
+                                    key={item._id}
+                                    complete={item.complete}
+                                    date={item.date}
+                                />
+                            </Grid>
+                        ))}
+                    </Paper>
                 </Grid>
             </Grid>
         )

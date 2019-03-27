@@ -1,20 +1,52 @@
 import React, { Component, Fragment } from "react";
-import { TextField, Paper, Grid, AppBar, Typography, FormControl, withStyles } from "@material-ui/core";
+import { TextField, Paper, Grid, AppBar, Typography, withStyles, Button } from "@material-ui/core";
+import { Save } from "@material-ui/icons/";
+import API from "../Utils/API"
 
 const styles = theme => ({
     container: {
         display: "flex",
+        padding: 24
 
     },
-    textField: {
+    buttons: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+    },
+    button: {
+        marginTop: theme.spacing.unit * 3,
         marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-    }
+      },
+    // textField: {
+    //     marginLeft: theme.spacing.unit,
+    //     marginRight: theme.spacing.unit,
+    // }
 })
 
 class AddTaskForm extends Component {
     constructor(props) {
         super(props)
+    }
+    state = {
+        itemTitle: "",
+        itemBody: "",
+    }
+
+    handleInputChange = name => event => {
+        this.setState({ [name]: event.target.value });
+    };
+
+    handleSubmit = event => {
+        event.preventDefault();
+        // console.log("Hello from save item");
+        if (!this.state.itemTitle || !this.state.itemBody) alert("Hey, you didn't fill out the form!")
+        else {
+            console.log("things are lookin good down here in the else statement")
+            API.saveItem({
+              itemTitle: this.state.itemTitle,
+              itemBody: this.state.itemBody  
+            })
+        }
     }
 
     render() {
@@ -52,7 +84,7 @@ class AddTaskForm extends Component {
                                 <Grid
                                     container
                                     spacing={8}
-                                    justify = "center"
+                                    justify="center"
                                 >
                                     <Grid
                                         item
@@ -60,8 +92,10 @@ class AddTaskForm extends Component {
                                         style={{ padding: 10 }}
                                     >
                                         <TextField
-                                            className = {classes.textField}
                                             id="itemTitle"
+                                            onChange={this.handleInputChange("itemTitle")}
+                                            value={this.state.itemTitle}
+                                            className={classes.textField}
                                             fullWidth
                                             InputLabelProps={{
                                                 shrink: true,
@@ -79,6 +113,8 @@ class AddTaskForm extends Component {
 
                                         <TextField
                                             id="itemBody"
+                                            onChange={this.handleInputChange("itemBody")}
+                                            value={this.state.itemBody}
                                             fullWidth
                                             InputLabelProps={{
                                                 shrink: true,
@@ -86,10 +122,31 @@ class AddTaskForm extends Component {
                                             margin="normal"
                                             // style={{ padding: 30 }}
                                             placeholder="To Do Body"
-                                            multiline
-                                            rows = "2"
+                                            // multiline
+                                            // rows="2"
                                             style={{ margin: 8 }}
                                         />
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        md={12}
+                                    >
+                                        <Fragment>
+
+                                            <div className={classes.buttons}>
+
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    className = {classes.button}
+                                                    type = "submit"
+                                                    onClick = {this.handleSubmit}
+                                                >
+                                                    <Save />
+                                                    S A V E I T E M
+                                            </Button>
+                                            </div>
+                                        </Fragment>
                                     </Grid>
                                 </Grid>
                             </form>
