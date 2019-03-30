@@ -41,11 +41,12 @@ class AddTaskForm extends Component {
         // console.log("Hello from save item");
         if (!this.state.itemTitle || !this.state.itemBody) alert("Hey, you didn't fill out the form!")
         else {
-            console.log("things are lookin good down here in the else statement")
+            // console.log("things are lookin good down here in the else statement")
             API.saveItem({
               itemTitle: this.state.itemTitle,
               itemBody: this.state.itemBody  
-            })
+            }).then(this.props.getAllItems());
+            this.setState ({itemTitle:"", itemBody:""})
         }
     }
 
@@ -109,22 +110,24 @@ class AddTaskForm extends Component {
                                     <Grid
                                         item
                                         md={11}
+                                        style = {{padding:10}}
                                     >
 
                                         <TextField
                                             id="itemBody"
                                             onChange={this.handleInputChange("itemBody")}
                                             value={this.state.itemBody}
+                                            className={classes.textField}
                                             fullWidth
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
+                                            style={{ margin: 8 }}
                                             margin="normal"
                                             // style={{ padding: 30 }}
                                             placeholder="To Do Body"
                                             // multiline
                                             // rows="2"
-                                            style={{ margin: 8 }}
                                         />
                                     </Grid>
                                     <Grid
@@ -143,8 +146,8 @@ class AddTaskForm extends Component {
                                                     onClick = {this.handleSubmit}
                                                 >
                                                     <Save />
-                                                    S A V E I T E M
-                                            </Button>
+                                                    Save
+                                                </Button>
                                             </div>
                                         </Fragment>
                                     </Grid>

@@ -20,7 +20,7 @@ class ToDo extends Component {
                     >
 
                         <Typography
-                            variant="h4"
+                            variant="h5"
                             align="center"
                             gutterBottom
                         >
@@ -28,14 +28,16 @@ class ToDo extends Component {
                         </Typography>
                         {this.props.items.map(item => (
                             <Grid
+                                key = {item._id}
                                 item
                                 md={12}
                             >
                                 <ItemCard
+                                    getAllItems = {this.props.getAllItems}
                                     title={item.title}
                                     comment={item.comment}
                                     body={item.body}
-                                    key={item._id}
+                                    id={item._id}
                                     complete={item.complete}
                                     date={item.date}
                                 />

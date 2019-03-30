@@ -17,7 +17,7 @@ class App extends Component {
     API.getAllItems()
     .then(resp=>{
       this.setState({items:resp.data})
-      console.log(this.state.items)
+      // console.log(this.state.items)
     }).catch(err=>console.log(err))
   }
   
@@ -27,7 +27,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="To Do List">
         <HeaderBar />
         <Grid
           container
@@ -37,19 +37,27 @@ class App extends Component {
             item
             md={6}
           >
-            <ToDo items = {this.state.items.filter(item=>item.complete===false)} />
+            <ToDo 
+              items = {this.state.items.filter(item=>item.complete===false)}
+              getAllItems = {this.getAllItems}
+            />
           </Grid>
           <Grid
             item
             md={6}
           >
-            <Completed />
+            <Completed
+              items = {this.state.items.filter(item=>item.complete===true)}
+              getAllItems = {this.getAllItems}
+            />
           </Grid>
           <Grid
             item
             md={12}
           >
-            <AddTaskForm />
+            <AddTaskForm 
+              getAllItems = {this.getAllItems}
+            />
           </Grid>
         </Grid>
       </div>
