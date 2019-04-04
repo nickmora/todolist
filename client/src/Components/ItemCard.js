@@ -6,6 +6,7 @@ import { ExpandMore, Check, Delete, Close } from "@material-ui/icons/"
 import classnames from "classnames"
 import API from '../Utils/API';
 import CommentForm from "./CommentForm"
+import Comment from "./Comment"
 
 const styles = theme => ({
     card: {
@@ -30,23 +31,33 @@ class ItemCard extends Component {
     state = {
         expanded: false,
         complete: this.props.complete,
-        comments: []
+        comments: [],
+        commentInput: ""
     }
-    
+
     componentDidMount() {
-        this.getComments(this.props.id)
+        // this.getComments(this.props.id)
     }
 
     getComments = (itemID) => {
         API.getAllComments(itemID)
-            .then(resp=>{
-                console.log(resp.data.comment)
-                this.setState({comments:resp.data.comment})
-            }).then(console.log(this.state.comments))
+            .then(resp => {
+                // console.log(resp.data)
+                this.setState({ 
+                    comments: resp.data,
+                    commentInput : ""
+                })
+            })
+            // .then(console.log(this.state.comments))
     }
 
     handleExpandClick = () => {
         this.setState(state => ({ expanded: !state.expanded }));
+        // () =>{
+            this.getComments(this.props.id);
+
+        // }
+        
     };
 
     handleDelete = (event) => {
@@ -67,6 +78,10 @@ class ItemCard extends Component {
             }).then(this.props.getAllItems)
         })
     }
+
+    handleInputChange = name => event => {
+        this.setState({ [name]: event.target.value });
+    };
 
     render() {
 
@@ -103,7 +118,21 @@ class ItemCard extends Component {
 
                         <div className={classes.buttons}>
 
-                            <Button
+                            {this.state.complete ? (
+                                <Button
+                                    variant="contained"
+                                    id={this.props.id}
+                                    color="primary"
+                                    className={classes.button}
+                                    type="submit"
+                                    onClick={this.toggleComplete}
+                                >
+                                    <Close />
+                                    Wait, nevermind
+                                    
+                                </Button>
+                            ) : (
+                                <Button
                                 variant="contained"
                                 id={this.props.id}
                                 color="primary"
@@ -111,9 +140,10 @@ class ItemCard extends Component {
                                 type="submit"
                                 onClick={this.toggleComplete}
                             >
-
-                                {this.state.complete ? <Close /> + " Wait... nvm" : <Check /> + " Done"}
-                            </Button>
+                                <Check />
+                                Done!
+                                </Button>
+                            )}
                             <Button
                                 variant="contained"
                                 id={this.props.key}
@@ -130,8 +160,22 @@ class ItemCard extends Component {
                 </CardActions>
                 <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                     <CardContent>
+                        {this.state.comments.length?
+                            this.state.comments.map(comment=>(
+                                <Comment
+                                    body = {comment.body}
+                                    key = {comment._id}
+                                    id = {comment._id}
+                                    getComments = {this.getComments}
+                                    parent = {this.props.id}
+                                />
+                        )): "There don't seem to be any comments on this one..."}
+                        
                         <CommentForm
-                            itemID = {this.props.id}
+                            itemID={this.props.id}
+                            commentInput={this.state.commentInput}
+                            handleInputChange={this.handleInputChange}
+                            getComments = {this.getComments}
                         />
                     </CardContent>
                 </Collapse>

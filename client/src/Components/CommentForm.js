@@ -15,24 +15,17 @@ const style = theme => ({
 
 class CommentForm extends Component {
 
-    state = {
-        input: "",
-    }
-
-    handleInputChange = name => event => {
-        this.setState({ [name]: event.target.value });
-    };
 
     handleSubmit = (event)=>{
         event.preventDefault()
-        if (!this.state.input) alert ("You gotta fill out the form, silly")
+        if (!this.props.commentInput) alert ("You gotta fill out the form, silly")
         else {
-            // console.log(this.state.input, this.props.itemID)
+            // console.log(this.props.commentInput + " space " + this.props.itemID)
             API.saveComment({
                 item: this.props.itemID,
-                body: this.state.input
-            });
-            this.setState({input:""})
+                body: this.props.commentInput
+            })
+            .then(this.props.getComments(this.props.itemID));
         }
     }
     render() {
@@ -40,20 +33,14 @@ class CommentForm extends Component {
         return (
             <Fragment>
 
-                <Typography
-                    variant="p"
-                    gutterBottom
-                >
-                    There don't seem to be any comments on this one...
-                </Typography>
                 <form>
 
                     <TextField
                         id="commentBody"
                         fullWidth
                         placeholder="Add a Comment!"
-                        value = {this.state.input}
-                        onChange = {this.handleInputChange("input")}
+                        value = {this.props.commentInput}
+                        onChange = {this.props.handleInputChange("commentInput")}
                     />
                     <div className = {classes.buttons}>
 
@@ -61,7 +48,7 @@ class CommentForm extends Component {
                         className = {classes.button}
                         type = "submit"
                         onClick = {this.handleSubmit}
-                        >
+                    >
                         Add Comment
                     </Button>
                         </div>
