@@ -20,9 +20,14 @@ module.exports = {
             .catch(err => console.log(err))
     },
     deleteItem: function (req, res) {
-        db.Item.deleteOne({ _id: req.params.id })
-            .then(allItems => res.json(allItems))
-            .catch(err => res.status(422).json(err))
+        db.Comment.deleteMany({ item: req.params.id }, function (err) {
+            if (err) console.log(err);
+
+        }).then(
+            db.Item.deleteOne({ _id: req.params.id })
+                .then(allItems => res.json(allItems))
+                .catch(err => res.status(422).json(err))
+        )
     },
     updateItem: function (req, res) {
         db.Item

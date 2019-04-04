@@ -15,7 +15,7 @@ const styles = theme => ({
     },
     button: {
         marginTop: theme.spacing.unit * 3,
-        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit * 4,
       },
     // textField: {
     //     marginLeft: theme.spacing.unit,
@@ -144,6 +144,7 @@ class AddTaskForm extends Component {
                                                     className = {classes.button}
                                                     type = "submit"
                                                     onClick = {this.handleSubmit}
+                                                    size = "large"
                                                 >
                                                     <Save />
                                                     Save
