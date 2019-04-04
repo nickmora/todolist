@@ -10,6 +10,9 @@ router.route("/:id")
     .delete(itemsController.deleteItem)
     .put(itemsController.updateItem)
     .post(commentsController.saveComment)
-    .get(commentsController.getAllComments)
+    .get(commentsController.getAllComments);
+
+router.route("/comment/:id")
+    .delete(commentsController.deleteComment);
 
 module.exports = router;

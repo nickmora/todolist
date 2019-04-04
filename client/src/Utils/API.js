@@ -21,7 +21,11 @@ export default {
     },
 
     getAllComments: function (itemID) {
-        return axios.get(`/api/item/${itemID}`)
+            return axios.get(`/api/item/${itemID}`)
+    },
+
+    deleteComment: function (commentID) {
+        return axios.delete(`/api/item/comment/${commentID}`)
     }
 
 }
