@@ -2,10 +2,7 @@ const db = require("../Models");
 
 module.exports = {
     saveItem: function (req, res) {
-        db.Item.create({
-            title: req.body.itemTitle,
-            body: req.body.itemBody
-        }).then(function (resp) {
+        db.Item.create(req.body).then(function (resp) {
             console.log(resp)
             console.log("Item Saved to Database!")
         }).catch(err => res.json(err))
@@ -13,10 +10,9 @@ module.exports = {
     getAll: function (req, res) {
         db.Item.find({})
             .then(allItems => {
-                console.log(allItems);
+                // console.log(allItems);
                 return res.json(allItems)
-            }
-            )
+            })
             .catch(err => console.log(err))
     },
     deleteItem: function (req, res) {

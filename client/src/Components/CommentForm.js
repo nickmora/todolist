@@ -48,6 +48,8 @@ class CommentForm extends Component {
                         className = {classes.button}
                         type = "submit"
                         onClick = {this.handleSubmit}
+                        color = "primary"
+                        variant = "contained"
                     >
                         Add Comment
                     </Button>

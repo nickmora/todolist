@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { TextField, Paper, Grid, AppBar, Typography, withStyles, Button } from "@material-ui/core";
 import { Save } from "@material-ui/icons/";
 import API from "../Utils/API"
+import moment from "moment"
 
 const styles = theme => ({
     container: {
@@ -38,13 +39,12 @@ class AddTaskForm extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        // console.log("Hello from save item");
         if (!this.state.itemTitle || !this.state.itemBody) alert("Hey, you didn't fill out the form!")
         else {
-            // console.log("things are lookin good down here in the else statement")
             API.saveItem({
-              itemTitle: this.state.itemTitle,
-              itemBody: this.state.itemBody  
+              title: this.state.itemTitle,
+              body: this.state.itemBody,
+              date: moment()  
             }).then(this.props.getAllItems());
             this.setState ({itemTitle:"", itemBody:""})
         }

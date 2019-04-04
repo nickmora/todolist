@@ -13,15 +13,8 @@ module.exports = {
     getAllComments: function (req, res) {
         db.Comment.find({ item: req.params.id })
             .then(dbComment => {
-                // console.log(dbComment);
                 res.json(dbComment).status(200)
             }).catch(err => res.json(err))
-        // db.Item.findOne({_id: req.params.id})
-        //     .populate("Comment")
-        //     .then(comments=>{
-        //         console.log(comments)
-        //         res.json(comments).status(200)
-        //     }).catch(err=>res.json(err))
     },
     deleteComment: function (req, res) {
         console.log("Hello from controller", req.params.id)

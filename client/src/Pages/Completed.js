@@ -17,10 +17,6 @@ class Completed extends Component {
                     <Paper
                         style={{ padding: 20 }}
                     >
-
-
-
-
                         <Typography
                             variant="h5"
                             align="center"
@@ -33,7 +29,7 @@ class Completed extends Component {
                                 in={item.complete}
                                 key={item._id}
                             >
-                                <Grid item md={12} key={item._id}>
+                                <Grid item md={12} style = {{margin: 20}}>
                                     <ItemCard
                                         getAllItems={this.props.getAllItems}
                                         title={item.title}

@@ -7,6 +7,8 @@ import classnames from "classnames"
 import API from '../Utils/API';
 import CommentForm from "./CommentForm"
 import Comment from "./Comment"
+import DeleteDialog from "./DeleteDialog"
+import moment from "moment"
 
 const styles = theme => ({
     card: {
@@ -33,11 +35,8 @@ class ItemCard extends Component {
         expanded: false,
         complete: this.props.complete,
         comments: [],
-        commentInput: ""
-    }
-
-    componentDidMount() {
-        // this.getComments(this.props.id)
+        commentInput: "",
+        open: false
     }
 
     getComments = (itemID) => {
@@ -49,16 +48,11 @@ class ItemCard extends Component {
                     commentInput: ""
                 })
             })
-        // .then(console.log(this.state.comments))
     }
 
     handleExpandClick = () => {
         this.setState(state => ({ expanded: !state.expanded }));
-        // () =>{
         this.getComments(this.props.id);
-
-        // }
-
     };
 
     handleDelete = (event) => {
@@ -78,6 +72,14 @@ class ItemCard extends Component {
                 complete: this.state.complete
             }).then(this.props.getAllItems)
         })
+    };
+
+    toggleDialog = (event) => {
+        event.preventDefault();
+        console.log(this.state.open)
+        this.setState({
+            open: !this.state.open
+        })
     }
 
     handleInputChange = name => event => {
@@ -89,50 +91,43 @@ class ItemCard extends Component {
         const { classes } = this.props;
 
         return (
-            <Card className={classes.card}>
-                <CardContent>
+            <Fragment>
+                <Card className={classes.card}>
+                    <CardContent>
 
-                    <Typography variant="h6" component="h2" align="center">
-                        {this.props.title}
-                    </Typography>
-                    <Typography className={classes.pos} color="textSecondary" align="right">
-                        {this.props.date}
-                    </Typography>
-                    <Typography component="p">
-                        {this.props.body}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Grid container justify = "space-between">
-                        <Grid item>
-                            <IconButton
-                                className={classnames(classes.expand, {
-                                    [classes.expandOpen]: this.state.expanded,
-                                })}
-                                onClick={this.handleExpandClick}
-                                aria-expanded={this.state.expanded}
-                                aria-label="Show more"
-                            >
+                        <Typography variant="h6" component="h2" align="center">
+                            {this.props.title}
+                        </Typography>
+                        <Typography className={classes.pos} color="textSecondary" align="right">
+                            {
+                                // moment.unix(
+                                this.props.date
+                                // ).format("MM/DD/YYYY")
+                                }
+                        </Typography>
+                        <Typography component="p">
+                            {this.props.body}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Grid container justify="space-between">
+                            <Grid item>
+                                <IconButton
+                                    className={classnames(classes.expand, {
+                                        [classes.expandOpen]: this.state.expanded,
+                                    })}
+                                    onClick={this.handleExpandClick}
+                                    aria-expanded={this.state.expanded}
+                                    aria-label="Show more"
+                                >
 
-                                {this.state.expanded ? <ExpandLess /> : <ExpandMore />}
-                            </IconButton>
-                        </Grid>
+                                    {this.state.expanded ? <ExpandLess /> : <ExpandMore />}
+                                </IconButton>
+                            </Grid>
 
-                        <Grid item>
-                            <div className={classes.buttons}>
-                                {this.state.complete ? (
-                                    <Button
-                                        variant="contained"
-                                        id={this.props.id}
-                                        color="primary"
-                                        className={classes.button}
-                                        type="submit"
-                                        onClick={this.toggleComplete}
-                                    >
-                                        <Close />
-                                        Wait, nevermind
-                                    </Button>
-                                ) : (
+                            <Grid item>
+                                <div className={classes.buttons}>
+                                    {this.state.complete ? (
                                         <Button
                                             variant="contained"
                                             id={this.props.id}
@@ -141,47 +136,74 @@ class ItemCard extends Component {
                                             type="submit"
                                             onClick={this.toggleComplete}
                                         >
-                                            <Check />
-                                            Done!
+                                            <Close />
+                                            Wait, nevermind
                                     </Button>
-                                    )}
-                                <Button
-                                    variant="contained"
-                                    id={this.props.key}
-                                    color="secondary"
-                                    className={classes.button}
-                                    type="submit"
-                                    onClick={this.handleDelete}
-                                >
-                                    <Delete />
-                                    Delete Item
+                                    ) : (
+                                            <Button
+                                                variant="contained"
+                                                id={this.props.id}
+                                                color="primary"
+                                                className={classes.button}
+                                                type="submit"
+                                                onClick={this.toggleComplete}
+                                            >
+                                                <Check />
+                                                Done!
                                     </Button>
-                            </div>
+                                        )}
+                                    <Button
+                                        variant="contained"
+                                        id={this.props.key}
+                                        color="secondary"
+                                        className={classes.button}
+                                        type="submit"
+                                        onClick={this.toggleDialog}
+                                    >
+                                        <Delete />
+                                        Delete
+                                </Button>
+                                </div>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </CardActions>
-                <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        {this.state.comments.length ?
-                            this.state.comments.map(comment => (
-                                <Comment
-                                    body={comment.body}
-                                    key={comment._id}
-                                    id={comment._id}
-                                    getComments={this.getComments}
-                                    parent={this.props.id}
-                                />
-                            )) : "There don't seem to be any comments on this one..."}
+                    </CardActions>
+                    <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                        <CardContent>
+                            {this.state.comments.length ?
+                                this.state.comments.map(comment => (
+                                    <Comment
+                                        body={comment.body}
+                                        key={comment._id}
+                                        id={comment._id}
+                                        getComments={this.getComments}
+                                        parent={this.props.id}
+                                    />
+                                )) : (
+                                    <Typography
+                                        variant = "h6"
+                                        gutterBottom
+                                    >
+                                        "There don't seem to be any comments on this one..."
+                                    </Typography>
+                                ) 
+                                
+                            }
 
-                        <CommentForm
-                            itemID={this.props.id}
-                            commentInput={this.state.commentInput}
-                            handleInputChange={this.handleInputChange}
-                            getComments={this.getComments}
-                        />
-                    </CardContent>
-                </Collapse>
-            </Card>
+                            <CommentForm
+                                itemID={this.props.id}
+                                commentInput={this.state.commentInput}
+                                handleInputChange={this.handleInputChange}
+                                getComments={this.getComments}
+                            />
+                        </CardContent>
+                    </Collapse>
+                </Card>
+                <DeleteDialog
+                    open={this.state.open}
+                    toggleDialog = {this.toggleDialog}
+                    deleteItem = {this.handleDelete}
+                />
+            </Fragment>
         );
     }
 }
