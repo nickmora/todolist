@@ -4,7 +4,7 @@ const moment = require("moment")
 
 const ItemSchema = new Schema({
     title: {type: String, required: true},
-    date: {type: Date, default: Date.now},
+    date: {type: Number, default: Date.now},
     complete: {type: Boolean, default: false},
     body: {type: String, required: true},
     comment: [{type: Schema.Types.ObjectId, ref: "Comment"}]

@@ -100,9 +100,7 @@ class ItemCard extends Component {
                         </Typography>
                         <Typography className={classes.pos} color="textSecondary" align="right">
                             {
-                                // moment.unix(
-                                this.props.date
-                                // ).format("MM/DD/YYYY")
+                                moment.unix(this.props.date).format("MM/DD/YYYY")
                                 }
                         </Typography>
                         <Typography component="p">
