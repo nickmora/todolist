@@ -44,7 +44,7 @@ class AddTaskForm extends Component {
             API.saveItem({
               title: this.state.itemTitle,
               body: this.state.itemBody,
-              date: moment()  
+            //   date:  
             }).then(this.props.getAllItems());
             this.setState ({itemTitle:"", itemBody:""})
         }
