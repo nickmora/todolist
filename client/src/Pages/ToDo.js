@@ -24,9 +24,10 @@ class ToDo extends Component {
                             align="center"
                             gutterBottom
                         >
-                            Things you gotta do, bruh
+                            Tasks to do
                         </Typography>
-                        {this.props.items.map(item => (
+                        {this.props.items.length ?
+                            (this.props.items.map(item => (
                             <Zoom 
                                 in = {!item.complete}
                                 key={item._id}    
@@ -48,7 +49,18 @@ class ToDo extends Component {
                                     />
                                 </Grid>
                             </Zoom>
-                        ))}
+                        ))) :
+                            ( <Paper style = {{padding: 20}}>
+
+                                <Typography
+                                    align = "center"
+                                    variant = "h4"
+                                    >
+                                    You don't have any to do items!  Add some below!
+                                </Typography>
+                            </Paper>
+                            )
+                        }
                     </Paper>
                 </Grid>
             </Grid>
