@@ -20,9 +20,7 @@ const styles = theme => ({
 })
 
 class AddTaskForm extends Component {
-    constructor(props) {
-        super(props)
-    }
+
     state = {
         itemTitle: "",
         itemBody: "",
@@ -30,7 +28,8 @@ class AddTaskForm extends Component {
 
     handleInputChange = name => event => {
         this.setState({ [name]: event.target.value });
-    };
+    }
+
 
     handleSubmit = event => {
         event.preventDefault();
