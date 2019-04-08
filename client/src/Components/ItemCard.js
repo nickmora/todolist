@@ -42,7 +42,6 @@ class ItemCard extends Component {
     getComments = (itemID) => {
         API.getAllComments(itemID)
             .then(resp => {
-                // console.log(resp.data)
                 this.setState({
                     comments: resp.data,
                     commentInput: ""

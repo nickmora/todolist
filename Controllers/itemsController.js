@@ -10,7 +10,6 @@ module.exports = {
     getAll: function (req, res) {
         db.Item.find({})
             .then(allItems => {
-                // console.log(allItems);
                 return res.json(allItems)
             })
             .catch(err => console.log(err))

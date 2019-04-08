@@ -2,7 +2,6 @@ import axios from "axios";
 
 export default {
     saveItem: function (itemData){
-        console.log(itemData)
         return axios.post("/api/item", itemData)
     },
     getAllItems: function(){
@@ -12,11 +11,9 @@ export default {
         return axios.delete("/api/item/" + itemID)
     },
     updateItem: function(itemData) {
-        console.log(itemData);
         return axios.put("/api/item/" + itemData.id, itemData)
     },
     saveComment: function (commentData) {
-        console.log(commentData);
         return axios.post(`/api/item/${commentData.item}`, commentData)
     },
 

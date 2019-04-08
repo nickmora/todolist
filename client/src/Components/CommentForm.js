@@ -20,7 +20,6 @@ class CommentForm extends Component {
         event.preventDefault()
         if (!this.props.commentInput) alert ("You gotta fill out the form, silly")
         else {
-            // console.log(this.props.commentInput + " space " + this.props.itemID)
             API.saveComment({
                 item: this.props.itemID,
                 body: this.props.commentInput

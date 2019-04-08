@@ -31,14 +31,14 @@ class DeleteDialog extends Component {
                             variant = "contained"
                             color = "primary"
                         >
-                            Wait, I changed my mind...
+                            Wait, nevermind...
                         </Button>
                         <Button
                             onClick = {this.props.deleteItem}
                             color = "secondary"
                             variant = "contained"
                         >
-                            Delete that shizz 4eva!
+                            Delete it forever!
                     </Button>
                     </DialogActions>
                 </Dialog>

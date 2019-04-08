@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { TextField, Paper, Grid, AppBar, Typography, withStyles, Button } from "@material-ui/core";
 import { Save } from "@material-ui/icons/";
 import API from "../Utils/API"
-import moment from "moment"
 
 const styles = theme => ({
     container: {
@@ -18,10 +17,6 @@ const styles = theme => ({
         marginTop: theme.spacing.unit * 3,
         marginRight: theme.spacing.unit * 4,
       },
-    // textField: {
-    //     marginLeft: theme.spacing.unit,
-    //     marginRight: theme.spacing.unit,
-    // }
 })
 
 class AddTaskForm extends Component {
@@ -44,7 +39,6 @@ class AddTaskForm extends Component {
             API.saveItem({
               title: this.state.itemTitle,
               body: this.state.itemBody,
-            //   date:  
             }).then(this.props.getAllItems());
             this.setState ({itemTitle:"", itemBody:""})
         }
@@ -58,7 +52,6 @@ class AddTaskForm extends Component {
                 <Grid
                     container
                     spacing={24}
-                    // alignContent = "center"
                     justify="center"
                 >
 
@@ -81,7 +74,6 @@ class AddTaskForm extends Component {
                         <Paper>
 
                             <form className={classes.container}>
-                                {/* {this.props.children} */}
                                 <Grid
                                     container
                                     spacing={8}
@@ -101,7 +93,6 @@ class AddTaskForm extends Component {
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
-                                            // style={{ padding: 30 }}
                                             style={{ margin: 8 }}
                                             margin="normal"
                                             placeholder="To Do Title"
@@ -124,10 +115,7 @@ class AddTaskForm extends Component {
                                             }}
                                             style={{ margin: 8 }}
                                             margin="normal"
-                                            // style={{ padding: 30 }}
                                             placeholder="To Do Body"
-                                            // multiline
-                                            // rows="2"
                                         />
                                     </Grid>
                                     <Grid

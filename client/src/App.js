@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import HeaderBar from './Components/HeaderBar';
-import { Grid, CssBaseline } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Completed from './Pages/Completed';
 import ToDo from "./Pages/ToDo"
 import AddTaskForm from "./Pages/AddTaskForm"
 import API from "./Utils/API"
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
-// import { red, blue } from "@material-ui/core/colors"
 import {red , blueGrey} from "@material-ui/core/colors/"
 
 
@@ -29,7 +28,6 @@ class App extends Component {
     API.getAllItems()
       .then(resp => {
         this.setState({ items: resp.data })
-        // console.log(this.state.items)
       }).catch(err => console.log(err))
   }
 
@@ -40,7 +38,6 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        {/* <CssBaseline /> */}
         <MuiThemeProvider theme = {theme}>
 
           <HeaderBar />
